@@ -1,5 +1,17 @@
 from datetime import datetime
 
+def to_str_offer(offer):
+    """
+    Return a nicely formatted string representation of an offer.
+    :param offer: an offer entity
+    :return: formatted string
+    :rtype: str
+    """
+    destination = get_offer_destination(offer)
+    start_date = get_offer_start_date(offer)
+    end_date = get_offer_end_date(offer)
+    price = get_offer_price(offer)
+    return f"Destination: {destination} | Period: {start_date} - {end_date} | Price: {price}"
 
 def create_offer(destination: str, start_date: str, end_date: str, price: float | int):
     """
@@ -13,7 +25,7 @@ def create_offer(destination: str, start_date: str, end_date: str, price: float 
     :param price: vacation price
     :type price: float
     :return: offer entity
-    :rtype: dict
+    :rtype: list
     """
     return [destination, start_date, end_date, float(price)]
 

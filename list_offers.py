@@ -9,6 +9,40 @@ from domain import (
     validate_offer
 )
 
+def eliminate_offers_price_nb_days(list_offers, giv_price, days):
+    """
+    Eliminate from the list of offers all the offers that have the price more than a given
+    price input by the user and have the duration of vacation less than a number of days input
+    by the user
+    :param list_offers: list of offers
+    :type list_offers: list
+    :param giv_price: price given by the user
+    :type giv_price: float
+    :param days: The number representing the duration of vacation
+    :type days: int
+    :return: none
+    """
+    for i in range(len(list_offers)-1, -1, -1):
+        start_date = datetime.strptime(get_offer_start_date(list_offers[i]), "%d.%m.%Y")
+        end_date = datetime.strptime(get_offer_end_date(list_offers[i]), "%d.%m.%Y")
+        if get_offer_price(list_offers[i]) > giv_price and (end_date - start_date).days + 1 < days:
+            list_offers.pop(i)
+
+def eliminate_offers_by_destinations_list(list_offers, list_destinations):
+    """
+    Eliminates all the offers that have a destination present in destination list given by user
+    :param list_offers: list of offers
+    :type list_offers: list
+    :param list_destinations: The list of destinations
+    :type list_destinations: list
+    :return: None
+    """
+    for i in range(len(list_offers) - 1, -1, -1):
+        for j in range(len(list_destinations)):
+            if get_offer_destination(list_offers[i]) == list_destinations[j]:
+                list_offers.pop(i)
+                break
+
 
 def compute_offers_in_time_interval(list_offers, start_date, end_date):
     """
